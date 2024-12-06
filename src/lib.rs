@@ -5,8 +5,9 @@ pub mod four;
 pub mod one;
 pub mod three;
 pub mod two;
+pub mod six;
 
-const FNS: &[fn(&Path)] = &[one::run, two::run, three::run, four::run, five::run];
+const FNS: &[fn(&Path)] = &[one::run, two::run, three::run, four::run, five::run, six::run];
 
 pub fn run(n: u32, f: &Path) {
     let i = (n - 1) as usize;
