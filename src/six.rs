@@ -3,7 +3,6 @@ use std::{collections::HashSet, fs, path::Path};
 pub fn run(f: &Path) {
     let s = fs::read_to_string(f).unwrap();
     println!("{}", solve_one(&s));
-    // Off by 7?
     println!("{}", solve_two(&s));
 }
 #[derive(Clone, Copy, PartialEq, Eq, Hash)]
@@ -34,7 +33,6 @@ impl Direction {
 pub fn solve_one(s: &str) -> u32 {
     let s: Vec<Vec<_>> = s.lines().map(|line| line.chars().collect()).collect();
     let (mut i, mut j) = (0, 0);
-    let mut direction = Direction::Up;
     for (i2, v) in s.iter().enumerate() {
         for (j2, &c) in v.iter().enumerate() {
             if c == '^' {
@@ -42,18 +40,24 @@ pub fn solve_one(s: &str) -> u32 {
             }
         }
     }
+    let set = transverse(i, j, &s);
+    set.iter().count() as u32
+}
+
+fn transverse(mut i: usize, mut j: usize, s: &Vec<Vec<char>>) -> HashSet<(usize, usize)> {
+    let mut direction = Direction::Up;
     let mut set = HashSet::new();
     while i != 0 && j != 0 && i < s.len() - 1 && j < s[0].len() - 1 {
         set.insert((i, j));
         let (i2, j2) = direction.new_pos(i, j);
         if s[i2][j2] == '#' {
             direction = direction.turn();
-            (i, j) = direction.new_pos(i, j);
         } else {
             (i, j) = (i2, j2);
         }
     }
-    set.iter().count() as u32 + 1
+    set.insert((i, j));
+    set
 }
 pub fn solve_two(s: &str) -> u32 {
     let mut s: Vec<Vec<_>> = s.lines().map(|line| line.chars().collect()).collect();
@@ -65,18 +69,17 @@ pub fn solve_two(s: &str) -> u32 {
             }
         }
     }
+    let transverse = transverse(i, j, &s);
     let mut count = 0;
-    for k in 0..s.len() {
-        for l in 0..s[0].len() {
-            if s[k][l] != '.' {
-                continue;
-            }
-            s[k][l] = '#';
-            if is_loop(&s, (i, j)) {
-                count += 1;
-            }
-            s[k][l] = '.';
+    for (k, l) in transverse {
+        if s[k][l] != '.' {
+            continue;
         }
+        s[k][l] = '#';
+        if is_loop(&s, (i, j)) {
+            count += 1;
+        }
+        s[k][l] = '.';
     }
     count
 }
@@ -91,7 +94,6 @@ fn is_loop(s: &Vec<Vec<char>>, (mut i, mut j): (usize, usize)) -> bool {
         let (i2, j2) = direction.new_pos(i, j);
         if s[i2][j2] == '#' {
             direction = direction.turn();
-            (i, j) = direction.new_pos(i, j);
         } else {
             (i, j) = (i2, j2);
         }
