@@ -9,6 +9,7 @@ pub mod seven;
 pub mod six;
 pub mod three;
 pub mod two;
+pub mod ten;
 pub mod eleven;
 
 const FNS: &[fn(&Path)] = &[
@@ -21,6 +22,7 @@ const FNS: &[fn(&Path)] = &[
     seven::run,
     eight::run,
     nine::run,
+    ten::run,
     eleven::run
 ];
 
