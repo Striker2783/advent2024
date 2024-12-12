@@ -1,16 +1,17 @@
 use std::{path::Path, process::exit};
 
 pub mod eight;
+pub mod eleven;
 pub mod five;
 pub mod four;
 pub mod nine;
 pub mod one;
 pub mod seven;
 pub mod six;
-pub mod three;
-pub mod two;
 pub mod ten;
-pub mod eleven;
+pub mod three;
+pub mod twelve;
+pub mod two;
 
 const FNS: &[fn(&Path)] = &[
     one::run,
@@ -23,7 +24,8 @@ const FNS: &[fn(&Path)] = &[
     eight::run,
     nine::run,
     ten::run,
-    eleven::run
+    eleven::run,
+    twelve::run,
 ];
 
 pub fn run(n: u32, f: &Path) {
