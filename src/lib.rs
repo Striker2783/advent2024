@@ -16,6 +16,7 @@ pub mod thirteen;
 pub mod fourteen;
 pub mod fifteen;
 pub mod sixteen;
+pub mod seventeen;
 
 const FNS: &[fn(&Path)] = &[
     one::run,
@@ -32,7 +33,7 @@ const FNS: &[fn(&Path)] = &[
     twelve::run,
     thirteen::run,
     fourteen::run,
-    fifteen::run,    sixteen::run
+    fifteen::run,    sixteen::run,seventeen::run
 ];
 
 pub fn run(n: u32, f: &Path) {
