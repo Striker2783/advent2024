@@ -21,6 +21,7 @@ pub mod twelve;
 mod twenty;
 mod twenty_one;
 pub mod two;
+mod twenty_two;
 
 const FNS: &[fn(&Path)] = &[
     one::run,
@@ -44,6 +45,7 @@ const FNS: &[fn(&Path)] = &[
     nineteen::run,
     twenty::run,
     twenty_one::run,
+    twenty_two::run,
 ];
 
 pub fn run(n: u32, f: &Path) {
